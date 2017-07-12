@@ -52,6 +52,7 @@ public class DurableSlicedChunk extends Chunk {
   }
 
   void persist() {
+    // Just added everthing here. TODO : Know what is the difference
     this.chunkBuffer.sync();
     this.chunkBuffer.flush();
     this.chunkBuffer.persist();

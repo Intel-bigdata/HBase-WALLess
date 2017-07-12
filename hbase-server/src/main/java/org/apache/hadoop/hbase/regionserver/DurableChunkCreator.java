@@ -33,16 +33,19 @@ public class DurableChunkCreator extends ChunkCreator {
   private static final Log LOG = LogFactory.getLog(DurableChunkCreator.class);
 
   private DurableChunk<NonVolatileMemAllocator> durableBigChunk;
+  // Offset to track the allocation inside the bigChunk.
   private AtomicLong offset = new AtomicLong(0);
 
   DurableChunkCreator(int chunkSize, long globalMemStoreSize, float poolSizePercentage,
       String durablePath) {
     super(chunkSize, true);
     // Do validation. but for now creating max sized allocator
+    // As per Gary, pmalloc works with any size and pmem is not storage and space efficient
     NonVolatileMemAllocator allocator = new NonVolatileMemAllocator(
         Utils.getNonVolatileMemoryAllocatorService("pmem"),
         (long) ((globalMemStoreSize * poolSizePercentage + (2048l))),
-        "/mnt/mem/chunkpoolbuffer1.dat", true);
+        durablePath, true);
+    // This does not work with > 15G
     durableBigChunk = allocator.createChunk((long)((globalMemStoreSize * poolSizePercentage)));
     if (durableBigChunk == null) {
       throw new RuntimeException("Not able to create a durable chunk");
@@ -93,6 +96,10 @@ public class DurableChunkCreator extends ChunkCreator {
 
   // TODO seems no one calls me
   protected void close() {
+    // The other problem here is that when there is an abrupt shutdown I think the chunk area
+    // may be corrupted and may not be able to reuse it? Need to check.
+    // TODO : Mnemonic currently deletes the path if it is already available - need to see
+    // if it interferes with restart scenario. If needed need to handle those cases
     this.durableBigChunk.destroy();
   }
 }
