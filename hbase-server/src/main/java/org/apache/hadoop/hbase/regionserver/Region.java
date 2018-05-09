@@ -697,6 +697,10 @@ public interface Region extends ConfigurationObserver {
 
     /** @return True if the flush requested a compaction, else false */
     boolean isCompactionNeeded();
+    /**
+     * Checks if the flush result was due to an empty memstore
+     */
+    boolean isEmptyMemstore();
   }
 
   /**

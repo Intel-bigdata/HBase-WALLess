@@ -158,6 +158,17 @@ public class RegionReplicaFlushHandler extends EventHandler {
             }
             break;
           } else {
+            // TODO : Currently unused. But helpful if we need to avoid the first RPC on region opening that triggers
+            // a flush on the primary region
+            if (response.getEmptyMemstore()) {
+              // nothing to do. Are we dealing with an old server?
+              LOG.warn(
+                "Was not able to trigger a flush from primary region due to empty memstore "
+                    + "Continuing to open the secondary region replica: "
+                    + region.getRegionInfo().getEncodedName());
+              region.setReadsEnabled(true);
+              break;
+            }
             // somehow we were not able to get the primary to write the flush request. It may be
             // closing or already flushing. Retry flush again after some sleep.
             if (!counter.shouldRetry()) {
@@ -168,8 +179,9 @@ public class RegionReplicaFlushHandler extends EventHandler {
           }
         } else {
           // nothing to do. Are we dealing with an old server?
-          LOG.warn("Was not able to trigger a flush from primary region due to old server version? "
-              + "Continuing to open the secondary region replica: "
+          LOG.warn(
+            "Was not able to trigger a flush from primary region due to old server version? "
+                + "Continuing to open the secondary region replica: "
               + region.getRegionInfo().getEncodedName());
           region.setReadsEnabled(true);
           break;

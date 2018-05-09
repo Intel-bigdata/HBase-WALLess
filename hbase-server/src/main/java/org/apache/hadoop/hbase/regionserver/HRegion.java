@@ -510,6 +510,11 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
     }
 
     @Override
+    public boolean isEmptyMemstore() {
+      return result == Result.CANNOT_FLUSH_MEMSTORE_EMPTY;
+    }
+
+    @Override
     public String toString() {
       return new StringBuilder()
         .append("flush result:").append(result).append(", ")
@@ -2378,9 +2383,6 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
         status.abort(msg);
         return new FlushResultImpl(FlushResult.Result.CANNOT_FLUSH, msg, false);
       }
-      if (requestingReplica > 0) {
-        this.regionReplicator.removeFromBadReplicas(requestingReplica);
-      }
       if (coprocessorHost != null) {
         status.setStatus("Running coprocessor pre-flush hooks");
         coprocessorHost.preFlush();
@@ -2418,7 +2420,15 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
           status.setStatus("Running post-flush coprocessor hooks");
           coprocessorHost.postFlush();
         }
-
+        // The pipeline is modified here by adding the requesting replica to the 'pipeline'.
+        // In a region opening sequence (on create table), there is a chance that replica 2
+        // is opened first and then the replica 1 is opened. So when replica 2 is opened
+        // by the time the region location is updated with primary replica server and replica 2's
+        // server. When the replica 1 is opened we don update the region location but since
+        // the below code adds 1 to the pipeline we have a mismatch between pipeline and region location.
+        if (requestingReplica > 0) {
+          this.regionReplicator.removeFromBadReplicas(requestingReplica);
+        }
         status.markComplete("Flush successful");
         return fs;
       } finally {
@@ -2591,12 +2601,16 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
             long flushOpSeqId = writeEntry.getWriteNumber();
             flushResult = new FlushResultImpl(FlushResult.Result.CANNOT_FLUSH_MEMSTORE_EMPTY,
                 flushOpSeqId, "Nothing to flush",
-                writeFlushRequestMarkerToWAL(wal, writeFlushWalMarker), null);
+                true, null);
             if (RegionReplicaUtil.isDefaultReplica(getRegionInfo().getReplicaId())) {
             	// EVen if there is no flush happening we need to send this CANNOT_FLUSH RPC
             	// so that the replica region can be enabled for reads. The reads were disabled in
             	// replica when the ReplicaRegionFlushHandler was called. This RPC
-            	// will ensure that the replica  regions are enabled for reads during replay of flush markers                
+            	// will ensure that the replica  regions are enabled for reads during replay of flush markers
+
+              // TODO : Avoid this RPC itself and handle the special case of empty memstore. If the pipeline
+              // creation is not done now because we don't do this  RPC then all the initial mutatoins have to wait
+              // for it to be done and then only mutations can proceed
                 future = sendFlushRpc(FlushAction.CANNOT_FLUSH, flushOpSeqId, null,
                     currentReplicaIndex, flushOpSeqId, true, null);
               }
@@ -2687,6 +2701,7 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
       // TODO : Everything under lock. This should not be happening under the write lock!
       // Next commit will change this under lock waiting for response
       if (RegionReplicaUtil.isDefaultReplica(getRegionInfo().getReplicaId())) {
+        // TODO  : we should add this in primary also
         future = sendFlushRpc(FlushAction.START_FLUSH, flushOpSeqId, committedFiles,
             currentReplicaIndex, flushOpSeqId, true, null);
       }
@@ -6361,6 +6376,9 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
           Store store = stores.get(entry.getKey());
           KeyValueScanner scanner;
           try {
+            if(!this.getRegionInfo().isMetaRegion()) {
+              System.out.println();
+            }
             scanner = store.getScanner(scan, entry.getValue(), this.readPt);
           } catch (FileNotFoundException e) {
             throw handleFileNotFound(e);

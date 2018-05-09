@@ -207,6 +207,9 @@ public class SimpleMemstoreReplicator implements MemstoreReplicator {
           if (nextRegionLocation == null) {
             // This can happen. Then we will have to reload from META.
             // TODO
+            LOG.info("Next region location is null. So returning for replica " + replica + " "
+                + replicator.getRegionInfo() + " " + (request != null) + " "+pipeline);
+            return;
           }
           if (LOG.isDebugEnabled()) {
             LOG.debug("Replicating from region " + replicator.getRegionLocation(curRegionReplicaId)
@@ -371,6 +374,11 @@ public class SimpleMemstoreReplicator implements MemstoreReplicator {
             MemstoreReplicaProtos.ReplicateMemstoreRequest.newBuilder();
         for (int i = 0; i < request.getRequest().getEntryCount(); i++) {
           reqBuilder.addEntry(request.getRequest().getEntry(i));
+        }
+        // This needs to be done. Otherwise we miss the actual replica pipeline details itself
+        // and in the next replica the request is empty and we just don't replicate at all.
+        for (int i = 0; i < request.getRequest().getReplicasCount(); i++) {
+          reqBuilder.addReplicas(request.getRequest().getReplicas(i));
         }
         reqBuilder.setEncodedRegionName(
           UnsafeByteOperations.unsafeWrap(location.getRegionInfo().getEncodedNameAsBytes()));

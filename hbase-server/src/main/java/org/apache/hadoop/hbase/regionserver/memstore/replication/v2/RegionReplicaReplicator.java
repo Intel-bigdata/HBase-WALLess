@@ -13,6 +13,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HRegionInfo;
 import org.apache.hadoop.hbase.HRegionLocation;
@@ -24,6 +27,7 @@ import org.apache.hadoop.hbase.client.RegionAdminServiceCallable;
 import org.apache.hadoop.hbase.client.RegionReplicaUtil;
 import org.apache.hadoop.hbase.regionserver.memstore.replication.MemstoreReplicationEntry;
 import org.apache.hadoop.hbase.regionserver.memstore.replication.PipelineException;
+import org.apache.hadoop.hbase.regionserver.memstore.replication.SimpleMemstoreReplicator;
 import org.apache.hadoop.hbase.shaded.protobuf.generated.MemstoreReplicaProtos.ReplicateMemstoreResponse;
 
 // This is a per Region instance 
@@ -93,6 +97,7 @@ public class RegionReplicaReplicator {
   private AtomicInteger badCountToBeCommittedInMeta = new AtomicInteger(0);
 
   private volatile long badReplicaInProgressTs = UNSET;
+  private static final Log LOG = LogFactory.getLog(RegionReplicaReplicator.class);
 
   public RegionReplicaReplicator(Configuration conf, HRegionInfo currentRegion, int minWriteReplicas,
        int replicationThreadIndex) {
@@ -220,7 +225,7 @@ public class RegionReplicaReplicator {
     }
   }
   
-  public boolean removeFromBadReplicas(Integer replica) {
+  public boolean removeFromBadReplicas(Integer replica) throws PipelineException {
     // This should be called only when this is Primary Region
     assert RegionReplicaUtil.isDefaultReplica(curRegion);
     Lock lock = this.lock.writeLock();
@@ -230,6 +235,16 @@ public class RegionReplicaReplicator {
       // there is no pipeline at that point of time. This Null checks helps avoid NPE
       if (pipeline != null) {
         this.pipeline.add(replica);
+        // In a region opening sequence (on create table), there is a chance that replica 2
+        // is opened first and then the replica 1 is opened. So when replica 2 is opened
+        // by the time the region location is updated with primary replica server and replica 2's
+        // server. When the replica 1 is opened we don update the region location but since
+        // the we add 1 to the pipeline we have a mismatch between pipeline and region location.
+        // so we check if the region locations and the pipeline matches and if not we update the region location
+        //This is a temp fix only. Need to understand all other cases where a region opening fails and how we deal with it.
+        if (!allRegionLocationsLoaded(new ArrayList<Integer>(this.pipeline))) {
+          loadRegionLocations(null);
+        }
         return this.badReplicas.remove(replica);
       }
       return true;
@@ -273,7 +288,7 @@ public class RegionReplicaReplicator {
     // This should be called only when this is Primary Region
     assert RegionReplicaUtil.isDefaultReplica(curRegion);
     if (this.regionLocations == null) {
-      loadRegionLocations();
+      loadRegionLocations(null);
     }
     Lock lock = this.lock.readLock();
     lock.lock();
@@ -299,18 +314,69 @@ public class RegionReplicaReplicator {
     }
   }
 
-  public List<Integer> verifyPipeline(List<Integer> pipeline) throws PipelineException {
+  public List<Integer> verifyPipeline(List<Integer> requestPipeline) throws PipelineException {
     // This should be called only when this is NOT a Primary Region
     assert !RegionReplicaUtil.isDefaultReplica(curRegion);
-    if (this.regionLocations == null) {
-      loadRegionLocations();
+    if (this.regionLocations == null || !allRegionLocationsLoaded(requestPipeline)) {
+      loadRegionLocations(requestPipeline);
     }
     // TODO no extra verify here. We can do the case of new replicas added as part of Table alter
     // and all here.
-    return pipeline;
+    return requestPipeline;
   }
 
-  private void loadRegionLocations() throws PipelineException {
+  // Compares the region location and pipeline and ensures that the pipeline and regoin location are the same.
+  // this is needed on region open sequence where the region locations could be updated even before the replicas
+  // are opened
+  private boolean allRegionLocationsLoaded(List<Integer> requestPipeline) {
+    // make this more easier and avoid these loops. Better to have one more ds having the non default replicas
+    // fetched as part of region locations
+    for (HRegionLocation loc : this.regionLocations) {
+      if (loc != null && loc.getServerName() != null) {
+        int replicaId = loc.getRegionInfo().getReplicaId();
+        if ((!RegionReplicaUtil.isDefaultReplica(replicaId))
+            && (!requestPipeline.contains(replicaId))) {
+          LOG.info("The requested pipeline " + requestPipeline + " does not have the replica id "
+              + replicaId);
+          resetRegionLocations();
+          return false;
+        }
+      }
+    }
+    // check both ways
+    for (int requestReplicaId : requestPipeline) {
+      boolean found = false;
+      for (HRegionLocation loc : this.regionLocations) {
+        if (loc != null && loc.getServerName() != null) {
+          int replicaId = loc.getRegionInfo().getReplicaId();
+          if ((!RegionReplicaUtil.isDefaultReplica(replicaId)) && requestReplicaId == replicaId) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (!found) {
+        LOG.info("The region location pipeline does not have the requested replica id "
+            + requestReplicaId);
+        resetRegionLocations();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private void resetRegionLocations() {
+    Lock lock = this.lock.writeLock();
+    lock.lock();
+    try {
+      LOG.info("resetting region locations "+this.getRegionInfo());
+      this.regionLocations = null;
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  private void loadRegionLocations(List<Integer> requestPipeline) throws PipelineException {
     // update the region locations here.
     Lock lock = this.lock.writeLock();
     lock.lock();
@@ -341,6 +407,8 @@ public class RegionReplicaReplicator {
           }
         }
       }
+      LOG.debug("The pipeline created has " + this.pipeline.size() + " " + pipeline + " "
+          + this.getRegionInfo());
     } finally {
       lock.unlock();
     }

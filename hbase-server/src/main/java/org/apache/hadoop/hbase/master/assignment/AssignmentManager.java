@@ -551,6 +551,8 @@ public class AssignmentManager implements ServerListener {
         if (RegionReplicaUtil.isDefaultReplica(hri)) {
           Pair<HRegionInfo, ServerName> nextReplicaRegion = this.getNextReplicaRegion(hri);
           if (nextReplicaRegion != null) {
+            LOG.info("Assigning the primary region " + hri + " to next replica "
+                + nextReplicaRegion.getFirst() + " " + nextReplicaRegion.getSecond());
             if (nextReplicaRegion.getFirst() != null & nextReplicaRegion.getSecond() != null) {
               procs[index++] = createAssignReplicaAsPrimaryProcedure(hri,
                 nextReplicaRegion.getSecond(), nextReplicaRegion.getFirst());

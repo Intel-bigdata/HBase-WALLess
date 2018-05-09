@@ -256,7 +256,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetRegionInfoRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -1223,7 +1222,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetRegionInfoResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -2087,7 +2085,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetStoreFileRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -2781,7 +2778,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetStoreFileResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -3267,7 +3263,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetOnlineRegionRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -3733,7 +3728,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetOnlineRegionResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -4891,7 +4885,6 @@ public final class AdminProtos {
         return hash;
       }
 
-      
       public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.OpenRegionRequest.RegionOpenInfo parseFrom(
           org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
           throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -6003,7 +5996,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.OpenRegionRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -6980,7 +6972,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.OpenRegionResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -7520,7 +7511,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.WarmupRegionRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -8040,7 +8030,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.WarmupRegionResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -8718,7 +8707,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.CloseRegionRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -9577,7 +9565,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.CloseRegionResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -10235,7 +10222,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.FlushRegionRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -10809,6 +10795,15 @@ public final class AdminProtos {
      * <code>optional bool wrote_flush_wal_marker = 3;</code>
      */
     boolean getWroteFlushWalMarker();
+
+    /**
+     * <code>optional bool empty_memstore = 4;</code>
+     */
+    boolean hasEmptyMemstore();
+    /**
+     * <code>optional bool empty_memstore = 4;</code>
+     */
+    boolean getEmptyMemstore();
   }
   /**
    * Protobuf type {@code hbase.pb.FlushRegionResponse}
@@ -10825,6 +10820,7 @@ public final class AdminProtos {
       lastFlushTime_ = 0L;
       flushed_ = false;
       wroteFlushWalMarker_ = false;
+      emptyMemstore_ = false;
     }
 
     @java.lang.Override
@@ -10868,6 +10864,11 @@ public final class AdminProtos {
             case 24: {
               bitField0_ |= 0x00000004;
               wroteFlushWalMarker_ = input.readBool();
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              emptyMemstore_ = input.readBool();
               break;
             }
           }
@@ -10940,6 +10941,21 @@ public final class AdminProtos {
       return wroteFlushWalMarker_;
     }
 
+    public static final int EMPTY_MEMSTORE_FIELD_NUMBER = 4;
+    private boolean emptyMemstore_;
+    /**
+     * <code>optional bool empty_memstore = 4;</code>
+     */
+    public boolean hasEmptyMemstore() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional bool empty_memstore = 4;</code>
+     */
+    public boolean getEmptyMemstore() {
+      return emptyMemstore_;
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -10965,6 +10981,9 @@ public final class AdminProtos {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBool(3, wroteFlushWalMarker_);
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBool(4, emptyMemstore_);
+      }
       unknownFields.writeTo(output);
     }
 
@@ -10984,6 +11003,10 @@ public final class AdminProtos {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += org.apache.hadoop.hbase.shaded.com.google.protobuf.CodedOutputStream
           .computeBoolSize(3, wroteFlushWalMarker_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += org.apache.hadoop.hbase.shaded.com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, emptyMemstore_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -11017,6 +11040,11 @@ public final class AdminProtos {
         result = result && (getWroteFlushWalMarker()
             == other.getWroteFlushWalMarker());
       }
+      result = result && (hasEmptyMemstore() == other.hasEmptyMemstore());
+      if (hasEmptyMemstore()) {
+        result = result && (getEmptyMemstore()
+            == other.getEmptyMemstore());
+      }
       result = result && unknownFields.equals(other.unknownFields);
       return result;
     }
@@ -11043,12 +11071,16 @@ public final class AdminProtos {
         hash = (53 * hash) + org.apache.hadoop.hbase.shaded.com.google.protobuf.Internal.hashBoolean(
             getWroteFlushWalMarker());
       }
+      if (hasEmptyMemstore()) {
+        hash = (37 * hash) + EMPTY_MEMSTORE_FIELD_NUMBER;
+        hash = (53 * hash) + org.apache.hadoop.hbase.shaded.com.google.protobuf.Internal.hashBoolean(
+            getEmptyMemstore());
+      }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.FlushRegionResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -11168,6 +11200,8 @@ public final class AdminProtos {
         bitField0_ = (bitField0_ & ~0x00000002);
         wroteFlushWalMarker_ = false;
         bitField0_ = (bitField0_ & ~0x00000004);
+        emptyMemstore_ = false;
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -11204,6 +11238,10 @@ public final class AdminProtos {
           to_bitField0_ |= 0x00000004;
         }
         result.wroteFlushWalMarker_ = wroteFlushWalMarker_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.emptyMemstore_ = emptyMemstore_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -11254,6 +11292,9 @@ public final class AdminProtos {
         }
         if (other.hasWroteFlushWalMarker()) {
           setWroteFlushWalMarker(other.getWroteFlushWalMarker());
+        }
+        if (other.hasEmptyMemstore()) {
+          setEmptyMemstore(other.getEmptyMemstore());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -11378,6 +11419,38 @@ public final class AdminProtos {
       public Builder clearWroteFlushWalMarker() {
         bitField0_ = (bitField0_ & ~0x00000004);
         wroteFlushWalMarker_ = false;
+        onChanged();
+        return this;
+      }
+
+      private boolean emptyMemstore_ ;
+      /**
+       * <code>optional bool empty_memstore = 4;</code>
+       */
+      public boolean hasEmptyMemstore() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional bool empty_memstore = 4;</code>
+       */
+      public boolean getEmptyMemstore() {
+        return emptyMemstore_;
+      }
+      /**
+       * <code>optional bool empty_memstore = 4;</code>
+       */
+      public Builder setEmptyMemstore(boolean value) {
+        bitField0_ |= 0x00000008;
+        emptyMemstore_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool empty_memstore = 4;</code>
+       */
+      public Builder clearEmptyMemstore() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        emptyMemstore_ = false;
         onChanged();
         return this;
       }
@@ -11680,7 +11753,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.SplitRegionRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -12253,7 +12325,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.SplitRegionResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -12800,7 +12871,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.CompactRegionRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -13412,7 +13482,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.CompactRegionResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -14057,7 +14126,6 @@ public final class AdminProtos {
         return hash;
       }
 
-      
       public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.UpdateFavoredNodesRequest.RegionUpdateInfo parseFrom(
           org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
           throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -14849,7 +14917,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.UpdateFavoredNodesRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -15560,7 +15627,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.UpdateFavoredNodesResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -16219,7 +16285,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.WALEntry parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -17265,7 +17330,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.ReplicateWALEntryRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -18198,7 +18262,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.ReplicateWALEntryResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -18572,7 +18635,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.RollWALWriterRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -19041,7 +19103,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.RollWALWriterResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -19623,7 +19684,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.StopServerRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -20091,7 +20151,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.StopServerResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -20465,7 +20524,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetServerInfoRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -20958,7 +21016,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.ServerInfo parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -21592,7 +21649,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetServerInfoResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -22112,7 +22168,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.UpdateConfigurationRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -22486,7 +22541,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.UpdateConfigurationResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -22931,7 +22985,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetRegionLoadRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -23542,7 +23595,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.GetRegionLoadResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -24284,7 +24336,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.ClearCompactionQueuesRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -24770,7 +24821,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.ClearCompactionQueuesResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -25327,7 +25377,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.ExecuteProceduresRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -26454,7 +26503,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.ExecuteProceduresResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -27660,7 +27708,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.MergeRegionsRequest parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -28427,7 +28474,6 @@ public final class AdminProtos {
       return hash;
     }
 
-    
     public static org.apache.hadoop.hbase.shaded.protobuf.generated.AdminProtos.MergeRegionsResponse parseFrom(
         org.apache.hadoop.hbase.shaded.com.google.protobuf.ByteString data)
         throws org.apache.hadoop.hbase.shaded.com.google.protobuf.InvalidProtocolBufferException {
@@ -30743,107 +30789,108 @@ public final class AdminProtos {
       "onRequest\022)\n\006region\030\001 \002(\0132\031.hbase.pb.Reg" +
       "ionSpecifier\022\030\n\020if_older_than_ts\030\002 \001(\004\022\036" +
       "\n\026write_flush_wal_marker\030\003 \001(\010\022\032\n\022reques" +
-      "ting_replica\030\004 \001(\r\"_\n\023FlushRegionRespons" +
+      "ting_replica\030\004 \001(\r\"w\n\023FlushRegionRespons" +
       "e\022\027\n\017last_flush_time\030\001 \002(\004\022\017\n\007flushed\030\002 " +
-      "\001(\010\022\036\n\026wrote_flush_wal_marker\030\003 \001(\010\"T\n\022S" +
-      "plitRegionRequest\022)\n\006region\030\001 \002(\0132\031.hbas" +
-      "e.pb.RegionSpecifier\022\023\n\013split_point\030\002 \001(" +
-      "\014\"\025\n\023SplitRegionResponse\"`\n\024CompactRegio" +
-      "nRequest\022)\n\006region\030\001 \002(\0132\031.hbase.pb.Regi",
-      "onSpecifier\022\r\n\005major\030\002 \001(\010\022\016\n\006family\030\003 \001" +
-      "(\014\"\027\n\025CompactRegionResponse\"\315\001\n\031UpdateFa" +
-      "voredNodesRequest\022I\n\013update_info\030\001 \003(\01324" +
-      ".hbase.pb.UpdateFavoredNodesRequest.Regi" +
-      "onUpdateInfo\032e\n\020RegionUpdateInfo\022$\n\006regi" +
-      "on\030\001 \002(\0132\024.hbase.pb.RegionInfo\022+\n\rfavore" +
-      "d_nodes\030\002 \003(\0132\024.hbase.pb.ServerName\".\n\032U" +
-      "pdateFavoredNodesResponse\022\020\n\010response\030\001 " +
-      "\001(\r\"a\n\010WALEntry\022\035\n\003key\030\001 \002(\0132\020.hbase.pb." +
-      "WALKey\022\027\n\017key_value_bytes\030\002 \003(\014\022\035\n\025assoc",
-      "iated_cell_count\030\003 \001(\005\"\242\001\n\030ReplicateWALE" +
-      "ntryRequest\022!\n\005entry\030\001 \003(\0132\022.hbase.pb.WA" +
-      "LEntry\022\034\n\024replicationClusterId\030\002 \001(\t\022\"\n\032" +
-      "sourceBaseNamespaceDirPath\030\003 \001(\t\022!\n\031sour" +
-      "ceHFileArchiveDirPath\030\004 \001(\t\"\033\n\031Replicate" +
-      "WALEntryResponse\"\026\n\024RollWALWriterRequest" +
-      "\"0\n\025RollWALWriterResponse\022\027\n\017region_to_f" +
-      "lush\030\001 \003(\014\"#\n\021StopServerRequest\022\016\n\006reaso" +
-      "n\030\001 \002(\t\"\024\n\022StopServerResponse\"\026\n\024GetServ" +
-      "erInfoRequest\"K\n\nServerInfo\022)\n\013server_na",
-      "me\030\001 \002(\0132\024.hbase.pb.ServerName\022\022\n\nwebui_" +
-      "port\030\002 \001(\r\"B\n\025GetServerInfoResponse\022)\n\013s" +
-      "erver_info\030\001 \002(\0132\024.hbase.pb.ServerInfo\"\034" +
-      "\n\032UpdateConfigurationRequest\"\035\n\033UpdateCo" +
-      "nfigurationResponse\"?\n\024GetRegionLoadRequ" +
-      "est\022\'\n\ntable_name\030\001 \001(\0132\023.hbase.pb.Table" +
-      "Name\"C\n\025GetRegionLoadResponse\022*\n\014region_" +
-      "loads\030\001 \003(\0132\024.hbase.pb.RegionLoad\"2\n\034Cle" +
-      "arCompactionQueuesRequest\022\022\n\nqueue_name\030" +
-      "\001 \003(\t\"\037\n\035ClearCompactionQueuesResponse\"\200",
-      "\001\n\030ExecuteProceduresRequest\0220\n\013open_regi" +
-      "on\030\001 \003(\0132\033.hbase.pb.OpenRegionRequest\0222\n" +
-      "\014close_region\030\002 \003(\0132\034.hbase.pb.CloseRegi" +
-      "onRequest\"\203\001\n\031ExecuteProceduresResponse\022" +
-      "1\n\013open_region\030\001 \003(\0132\034.hbase.pb.OpenRegi" +
-      "onResponse\0223\n\014close_region\030\002 \003(\0132\035.hbase" +
-      ".pb.CloseRegionResponse\"\244\001\n\023MergeRegions" +
-      "Request\022+\n\010region_a\030\001 \002(\0132\031.hbase.pb.Reg" +
-      "ionSpecifier\022+\n\010region_b\030\002 \002(\0132\031.hbase.p" +
-      "b.RegionSpecifier\022\027\n\010forcible\030\003 \001(\010:\005fal",
-      "se\022\032\n\022master_system_time\030\004 \001(\004\"\026\n\024MergeR" +
-      "egionsResponse2\333\017\n\014AdminService\022P\n\rGetRe" +
-      "gionInfo\022\036.hbase.pb.GetRegionInfoRequest" +
-      "\032\037.hbase.pb.GetRegionInfoResponse\022M\n\014Get" +
-      "StoreFile\022\035.hbase.pb.GetStoreFileRequest" +
-      "\032\036.hbase.pb.GetStoreFileResponse\022V\n\017GetO" +
-      "nlineRegion\022 .hbase.pb.GetOnlineRegionRe" +
-      "quest\032!.hbase.pb.GetOnlineRegionResponse" +
-      "\022G\n\nOpenRegion\022\033.hbase.pb.OpenRegionRequ" +
-      "est\032\034.hbase.pb.OpenRegionResponse\022M\n\014War",
-      "mupRegion\022\035.hbase.pb.WarmupRegionRequest" +
-      "\032\036.hbase.pb.WarmupRegionResponse\022J\n\013Clos" +
-      "eRegion\022\034.hbase.pb.CloseRegionRequest\032\035." +
-      "hbase.pb.CloseRegionResponse\022J\n\013FlushReg" +
-      "ion\022\034.hbase.pb.FlushRegionRequest\032\035.hbas" +
-      "e.pb.FlushRegionResponse\022J\n\013SplitRegion\022" +
-      "\034.hbase.pb.SplitRegionRequest\032\035.hbase.pb" +
-      ".SplitRegionResponse\022P\n\rCompactRegion\022\036." +
-      "hbase.pb.CompactRegionRequest\032\037.hbase.pb" +
-      ".CompactRegionResponse\022\\\n\021ReplicateWALEn",
-      "try\022\".hbase.pb.ReplicateWALEntryRequest\032" +
-      "#.hbase.pb.ReplicateWALEntryResponse\022Q\n\006" +
-      "Replay\022\".hbase.pb.ReplicateWALEntryReque" +
-      "st\032#.hbase.pb.ReplicateWALEntryResponse\022" +
-      "\\\n\021ReplicateMemstore\022\".hbase.pb.Replicat" +
-      "eMemstoreRequest\032#.hbase.pb.ReplicateMem" +
-      "storeResponse\022P\n\rRollWALWriter\022\036.hbase.p" +
-      "b.RollWALWriterRequest\032\037.hbase.pb.RollWA" +
-      "LWriterResponse\022P\n\rGetServerInfo\022\036.hbase" +
-      ".pb.GetServerInfoRequest\032\037.hbase.pb.GetS",
-      "erverInfoResponse\022G\n\nStopServer\022\033.hbase." +
-      "pb.StopServerRequest\032\034.hbase.pb.StopServ" +
-      "erResponse\022_\n\022UpdateFavoredNodes\022#.hbase" +
-      ".pb.UpdateFavoredNodesRequest\032$.hbase.pb" +
-      ".UpdateFavoredNodesResponse\022b\n\023UpdateCon" +
-      "figuration\022$.hbase.pb.UpdateConfiguratio" +
-      "nRequest\032%.hbase.pb.UpdateConfigurationR" +
-      "esponse\022P\n\rGetRegionLoad\022\036.hbase.pb.GetR" +
-      "egionLoadRequest\032\037.hbase.pb.GetRegionLoa" +
-      "dResponse\022h\n\025ClearCompactionQueues\022&.hba",
-      "se.pb.ClearCompactionQueuesRequest\032\'.hba" +
-      "se.pb.ClearCompactionQueuesResponse\022k\n\026G" +
-      "etSpaceQuotaSnapshots\022\'.hbase.pb.GetSpac" +
-      "eQuotaSnapshotsRequest\032(.hbase.pb.GetSpa" +
-      "ceQuotaSnapshotsResponse\022\\\n\021ExecuteProce" +
-      "dures\022\".hbase.pb.ExecuteProceduresReques" +
-      "t\032#.hbase.pb.ExecuteProceduresResponse\022M" +
-      "\n\014MergeRegions\022\035.hbase.pb.MergeRegionsRe" +
-      "quest\032\036.hbase.pb.MergeRegionsResponse\022m\n" +
-      "\020HandleBadRegions\022,.hbase.pb.RSRegionRep",
-      "licaHealthChangeRequest\032+.hbase.pb.Regio" +
-      "nReplicaHealthChangeResponseBH\n1org.apac" +
-      "he.hadoop.hbase.shaded.protobuf.generate" +
-      "dB\013AdminProtosH\001\210\001\001\240\001\001"
+      "\001(\010\022\036\n\026wrote_flush_wal_marker\030\003 \001(\010\022\026\n\016e" +
+      "mpty_memstore\030\004 \001(\010\"T\n\022SplitRegionReques" +
+      "t\022)\n\006region\030\001 \002(\0132\031.hbase.pb.RegionSpeci" +
+      "fier\022\023\n\013split_point\030\002 \001(\014\"\025\n\023SplitRegion" +
+      "Response\"`\n\024CompactRegionRequest\022)\n\006regi",
+      "on\030\001 \002(\0132\031.hbase.pb.RegionSpecifier\022\r\n\005m" +
+      "ajor\030\002 \001(\010\022\016\n\006family\030\003 \001(\014\"\027\n\025CompactReg" +
+      "ionResponse\"\315\001\n\031UpdateFavoredNodesReques" +
+      "t\022I\n\013update_info\030\001 \003(\01324.hbase.pb.Update" +
+      "FavoredNodesRequest.RegionUpdateInfo\032e\n\020" +
+      "RegionUpdateInfo\022$\n\006region\030\001 \002(\0132\024.hbase" +
+      ".pb.RegionInfo\022+\n\rfavored_nodes\030\002 \003(\0132\024." +
+      "hbase.pb.ServerName\".\n\032UpdateFavoredNode" +
+      "sResponse\022\020\n\010response\030\001 \001(\r\"a\n\010WALEntry\022" +
+      "\035\n\003key\030\001 \002(\0132\020.hbase.pb.WALKey\022\027\n\017key_va",
+      "lue_bytes\030\002 \003(\014\022\035\n\025associated_cell_count" +
+      "\030\003 \001(\005\"\242\001\n\030ReplicateWALEntryRequest\022!\n\005e" +
+      "ntry\030\001 \003(\0132\022.hbase.pb.WALEntry\022\034\n\024replic" +
+      "ationClusterId\030\002 \001(\t\022\"\n\032sourceBaseNamesp" +
+      "aceDirPath\030\003 \001(\t\022!\n\031sourceHFileArchiveDi" +
+      "rPath\030\004 \001(\t\"\033\n\031ReplicateWALEntryResponse" +
+      "\"\026\n\024RollWALWriterRequest\"0\n\025RollWALWrite" +
+      "rResponse\022\027\n\017region_to_flush\030\001 \003(\014\"#\n\021St" +
+      "opServerRequest\022\016\n\006reason\030\001 \002(\t\"\024\n\022StopS" +
+      "erverResponse\"\026\n\024GetServerInfoRequest\"K\n",
+      "\nServerInfo\022)\n\013server_name\030\001 \002(\0132\024.hbase" +
+      ".pb.ServerName\022\022\n\nwebui_port\030\002 \001(\r\"B\n\025Ge" +
+      "tServerInfoResponse\022)\n\013server_info\030\001 \002(\013" +
+      "2\024.hbase.pb.ServerInfo\"\034\n\032UpdateConfigur" +
+      "ationRequest\"\035\n\033UpdateConfigurationRespo" +
+      "nse\"?\n\024GetRegionLoadRequest\022\'\n\ntable_nam" +
+      "e\030\001 \001(\0132\023.hbase.pb.TableName\"C\n\025GetRegio" +
+      "nLoadResponse\022*\n\014region_loads\030\001 \003(\0132\024.hb" +
+      "ase.pb.RegionLoad\"2\n\034ClearCompactionQueu" +
+      "esRequest\022\022\n\nqueue_name\030\001 \003(\t\"\037\n\035ClearCo",
+      "mpactionQueuesResponse\"\200\001\n\030ExecuteProced" +
+      "uresRequest\0220\n\013open_region\030\001 \003(\0132\033.hbase" +
+      ".pb.OpenRegionRequest\0222\n\014close_region\030\002 " +
+      "\003(\0132\034.hbase.pb.CloseRegionRequest\"\203\001\n\031Ex" +
+      "ecuteProceduresResponse\0221\n\013open_region\030\001" +
+      " \003(\0132\034.hbase.pb.OpenRegionResponse\0223\n\014cl" +
+      "ose_region\030\002 \003(\0132\035.hbase.pb.CloseRegionR" +
+      "esponse\"\244\001\n\023MergeRegionsRequest\022+\n\010regio" +
+      "n_a\030\001 \002(\0132\031.hbase.pb.RegionSpecifier\022+\n\010" +
+      "region_b\030\002 \002(\0132\031.hbase.pb.RegionSpecifie",
+      "r\022\027\n\010forcible\030\003 \001(\010:\005false\022\032\n\022master_sys" +
+      "tem_time\030\004 \001(\004\"\026\n\024MergeRegionsResponse2\333" +
+      "\017\n\014AdminService\022P\n\rGetRegionInfo\022\036.hbase" +
+      ".pb.GetRegionInfoRequest\032\037.hbase.pb.GetR" +
+      "egionInfoResponse\022M\n\014GetStoreFile\022\035.hbas" +
+      "e.pb.GetStoreFileRequest\032\036.hbase.pb.GetS" +
+      "toreFileResponse\022V\n\017GetOnlineRegion\022 .hb" +
+      "ase.pb.GetOnlineRegionRequest\032!.hbase.pb" +
+      ".GetOnlineRegionResponse\022G\n\nOpenRegion\022\033" +
+      ".hbase.pb.OpenRegionRequest\032\034.hbase.pb.O",
+      "penRegionResponse\022M\n\014WarmupRegion\022\035.hbas" +
+      "e.pb.WarmupRegionRequest\032\036.hbase.pb.Warm" +
+      "upRegionResponse\022J\n\013CloseRegion\022\034.hbase." +
+      "pb.CloseRegionRequest\032\035.hbase.pb.CloseRe" +
+      "gionResponse\022J\n\013FlushRegion\022\034.hbase.pb.F" +
+      "lushRegionRequest\032\035.hbase.pb.FlushRegion" +
+      "Response\022J\n\013SplitRegion\022\034.hbase.pb.Split" +
+      "RegionRequest\032\035.hbase.pb.SplitRegionResp" +
+      "onse\022P\n\rCompactRegion\022\036.hbase.pb.Compact" +
+      "RegionRequest\032\037.hbase.pb.CompactRegionRe",
+      "sponse\022\\\n\021ReplicateWALEntry\022\".hbase.pb.R" +
+      "eplicateWALEntryRequest\032#.hbase.pb.Repli" +
+      "cateWALEntryResponse\022Q\n\006Replay\022\".hbase.p" +
+      "b.ReplicateWALEntryRequest\032#.hbase.pb.Re" +
+      "plicateWALEntryResponse\022\\\n\021ReplicateMems" +
+      "tore\022\".hbase.pb.ReplicateMemstoreRequest" +
+      "\032#.hbase.pb.ReplicateMemstoreResponse\022P\n" +
+      "\rRollWALWriter\022\036.hbase.pb.RollWALWriterR" +
+      "equest\032\037.hbase.pb.RollWALWriterResponse\022" +
+      "P\n\rGetServerInfo\022\036.hbase.pb.GetServerInf",
+      "oRequest\032\037.hbase.pb.GetServerInfoRespons" +
+      "e\022G\n\nStopServer\022\033.hbase.pb.StopServerReq" +
+      "uest\032\034.hbase.pb.StopServerResponse\022_\n\022Up" +
+      "dateFavoredNodes\022#.hbase.pb.UpdateFavore" +
+      "dNodesRequest\032$.hbase.pb.UpdateFavoredNo" +
+      "desResponse\022b\n\023UpdateConfiguration\022$.hba" +
+      "se.pb.UpdateConfigurationRequest\032%.hbase" +
+      ".pb.UpdateConfigurationResponse\022P\n\rGetRe" +
+      "gionLoad\022\036.hbase.pb.GetRegionLoadRequest" +
+      "\032\037.hbase.pb.GetRegionLoadResponse\022h\n\025Cle",
+      "arCompactionQueues\022&.hbase.pb.ClearCompa" +
+      "ctionQueuesRequest\032\'.hbase.pb.ClearCompa" +
+      "ctionQueuesResponse\022k\n\026GetSpaceQuotaSnap" +
+      "shots\022\'.hbase.pb.GetSpaceQuotaSnapshotsR" +
+      "equest\032(.hbase.pb.GetSpaceQuotaSnapshots" +
+      "Response\022\\\n\021ExecuteProcedures\022\".hbase.pb" +
+      ".ExecuteProceduresRequest\032#.hbase.pb.Exe" +
+      "cuteProceduresResponse\022M\n\014MergeRegions\022\035" +
+      ".hbase.pb.MergeRegionsRequest\032\036.hbase.pb" +
+      ".MergeRegionsResponse\022m\n\020HandleBadRegion",
+      "s\022,.hbase.pb.RSRegionReplicaHealthChange" +
+      "Request\032+.hbase.pb.RegionReplicaHealthCh" +
+      "angeResponseBH\n1org.apache.hadoop.hbase." +
+      "shaded.protobuf.generatedB\013AdminProtosH\001" +
+      "\210\001\001\240\001\001"
     };
     org.apache.hadoop.hbase.shaded.com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new org.apache.hadoop.hbase.shaded.com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -30952,7 +30999,7 @@ public final class AdminProtos {
     internal_static_hbase_pb_FlushRegionResponse_fieldAccessorTable = new
       org.apache.hadoop.hbase.shaded.com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_hbase_pb_FlushRegionResponse_descriptor,
-        new java.lang.String[] { "LastFlushTime", "Flushed", "WroteFlushWalMarker", });
+        new java.lang.String[] { "LastFlushTime", "Flushed", "WroteFlushWalMarker", "EmptyMemstore", });
     internal_static_hbase_pb_SplitRegionRequest_descriptor =
       getDescriptor().getMessageTypes().get(14);
     internal_static_hbase_pb_SplitRegionRequest_fieldAccessorTable = new

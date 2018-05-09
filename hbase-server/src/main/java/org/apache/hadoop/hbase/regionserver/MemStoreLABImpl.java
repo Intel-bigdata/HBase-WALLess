@@ -20,7 +20,6 @@ package org.apache.hadoop.hbase.regionserver;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -79,7 +78,7 @@ public class MemStoreLABImpl implements MemStoreLAB {
 
   // A set of chunks contained by this memstore LAB
   @VisibleForTesting
-  Set<Integer> chunks = new ConcurrentSkipListSet<Integer>();
+  ConcurrentSkipListSet<Integer> chunks = new ConcurrentSkipListSet<Integer>();
   private final int chunkSize;
   private final int maxAlloc;
   private final ChunkCreator chunkCreator;
@@ -89,7 +88,7 @@ public class MemStoreLABImpl implements MemStoreLAB {
   private volatile boolean closed = false;
   // Used to collect seqIds so that we need to wait for the persist() to really wait till
   // we complete it
-  private Set<Long> seqIds = new HashSet<Long>();
+  private Set<Long> seqIds = new ConcurrentSkipListSet<Long>();
   // This flag is for reclaiming chunks. Its set when putting chunks back to
   // pool
   private AtomicBoolean reclaimed = new AtomicBoolean(false);
@@ -147,10 +146,13 @@ public class MemStoreLABImpl implements MemStoreLAB {
       (c instanceof DurableSlicedChunk));
     c.updateOffsetAndLength(allocOffset, batchSize + c.getBatchMetaDataLength(cells.size()));
     if (asyncPersist) {
-      synchronized (this) {
+      //synchronized (this) {
         // TODO : need not do this in the replica side. Can be removed.
         seqIds.add(cells.get(0).getSequenceId());
-      }
+        synchronized(this) {
+          notifyAll();
+        }
+      //}
     }
     return result;
     //c.persist();
@@ -197,12 +199,14 @@ public class MemStoreLABImpl implements MemStoreLAB {
   public void persist(long seqId, boolean done) {
     // how to avoid this? We should not iterate over all the chunks
     // avoid this
-    synchronized (this) {
+    //synchronized (this) {
       // TODO - passing -1 seems dirty trick. But for now it will do.
       if (seqId != -1) {
         while (!seqIds.contains(seqId)) {
           try {
-            wait(10);
+            synchronized (this) {
+            wait(2);
+            }
           } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -213,7 +217,7 @@ public class MemStoreLABImpl implements MemStoreLAB {
         // just clear
         seqIds.clear();
       }
-    }
+   // }
     for(int chunkId : chunks) {
       this.chunkCreator.getChunk(chunkId).persist(done);
     }

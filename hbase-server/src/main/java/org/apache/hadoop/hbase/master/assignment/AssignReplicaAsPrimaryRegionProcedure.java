@@ -51,6 +51,8 @@ public class AssignReplicaAsPrimaryRegionProcedure extends AssignProcedure {
       HRegionInfo destinationRegion) {
     super(regionInfo, destinationServer);
     this.destinationRegion = destinationRegion;
+    LOG.info("Creating assign replica procedure for the region " + regionInfo + " dest region "
+        + destinationRegion + " " + destinationServer);
   }
   
   @Override

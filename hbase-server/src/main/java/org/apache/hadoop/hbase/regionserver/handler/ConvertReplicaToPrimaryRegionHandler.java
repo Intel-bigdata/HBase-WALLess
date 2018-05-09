@@ -19,10 +19,13 @@ package org.apache.hadoop.hbase.regionserver.handler;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hbase.HRegionInfo;
 import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.Server;
 import org.apache.hadoop.hbase.classification.InterfaceAudience;
+import org.apache.hadoop.hbase.master.assignment.AssignReplicaAsPrimaryRegionProcedure;
 import org.apache.hadoop.hbase.regionserver.HRegion;
 import org.apache.hadoop.hbase.regionserver.HRegionServer;
 import org.apache.hadoop.hbase.regionserver.RegionServerServices;
@@ -30,6 +33,7 @@ import org.apache.hadoop.hbase.regionserver.RegionServerServices;
 @InterfaceAudience.Private
 public class ConvertReplicaToPrimaryRegionHandler extends OpenPriorityRegionHandler {
 
+  private static final Log LOG = LogFactory.getLog(ConvertReplicaToPrimaryRegionHandler.class);
   private final HRegionInfo replicaRegion;
 
   public ConvertReplicaToPrimaryRegionHandler(Server server, RegionServerServices rsServices,
@@ -37,11 +41,13 @@ public class ConvertReplicaToPrimaryRegionHandler extends OpenPriorityRegionHand
       long masterSystemTime) {
     super(server, rsServices, regionInfo, htd, masterSystemTime);
     this.replicaRegion = replicaRegion;
+    LOG.info("Converting replica region "+replicaRegion+ " to primary region "+regionInfo);
   }
 
   protected HRegion openRegion() {
     HRegion region = (HRegion) this.rsServices
         .getFromOnlineRegions(this.replicaRegion.getEncodedName());
+    LOG.info("Converting region "+region.getRegionInfo() +  "  to primary region");
     region.convertAsPrimaryRegion();
     return region;
   }

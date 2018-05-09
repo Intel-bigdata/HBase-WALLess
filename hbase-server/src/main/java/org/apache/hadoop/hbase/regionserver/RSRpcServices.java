@@ -1695,6 +1695,8 @@ public class RSRpcServices implements HBaseRPCErrorHandler, AdminService.Blockin
           regionServer.compactSplitThread.requestSystemCompaction(region,
             "Compaction through user triggered flush");
         }
+        // TODO :Currently unused. If not needed we can remove this
+        builder.setEmptyMemstore(flushResult.isEmptyMemstore());
         builder.setFlushed(flushResult.isFlushSucceeded());
         builder.setWroteFlushWalMarker(flushResult.wroteFlushWalMarker);
       }

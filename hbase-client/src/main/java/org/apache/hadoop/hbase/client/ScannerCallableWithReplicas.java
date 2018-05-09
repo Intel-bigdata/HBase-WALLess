@@ -167,8 +167,8 @@ class ScannerCallableWithReplicas implements RetryingCallable<Result[]> {
     addCallsForCurrentReplica(cs);
     if (LOG.isDebugEnabled()) {
       if (currentScannerCallable != null && currentScannerCallable.getHRegionInfo() != null) {
-        LOG.debug("The current replica being served is "
-            + currentScannerCallable.getHRegionInfo().getReplicaId());
+        //LOG.debug("The current replica being served is "
+           // + currentScannerCallable.getHRegionInfo().getReplicaId());
       }
     }
     // The algo works like this for SCans
